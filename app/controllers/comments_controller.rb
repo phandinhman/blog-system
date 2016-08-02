@@ -42,4 +42,9 @@ class CommentsController < ApplicationController
     def entry_params
       params.require(:comment).permit(:content, :entry_id, :user_id)
     end
+
+    def correct_user
+      @comment = current_user.comments.find_by(id: params[:id])
+      redirect_to root_url if @comment.nil?
+    end
 end
